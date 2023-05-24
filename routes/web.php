@@ -71,7 +71,17 @@ Route::prefix('webapp')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/rt/{id}', [\App\Http\Controllers\backsite\RTController::class, 'update'])->name('rt.update'); 
     Route::delete('/rt/{id}', [\App\Http\Controllers\backsite\RTController::class, 'destroy'])->name('rt.destroy');
 
+    // Kelompok Tani
+    Route::get('/kelompoktani', [\App\Http\Controllers\backsite\KelompokTaniController::class, 'index'])->name('kelompoktani.index');     
+    Route::post('/kelompoktani', [\App\Http\Controllers\backsite\KelompokTaniController::class, 'store'])->name('kelompoktani.store'); 
+    Route::put('/kelompoktani/{id}', [\App\Http\Controllers\backsite\KelompokTaniController::class, 'update'])->name('kelompoktani.update'); 
+    Route::delete('/kelompoktani/{id}', [\App\Http\Controllers\backsite\KelompokTaniController::class, 'destroy'])->name('kelompoktani.destroy'); 
 
+    // Anggota PokTan
+    Route::get('/anggotapoktan/{id}', [\App\Http\Controllers\backsite\AnggotaPokTanController::class, 'index'])->name('anggotapoktan.index');  
+    Route::post('/anggotapoktan', [\App\Http\Controllers\backsite\AnggotaPokTanController::class, 'store'])->name('anggotapoktan.store'); 
+    Route::put('/anggotapoktan/{id}', [\App\Http\Controllers\backsite\AnggotaPokTanController::class, 'update'])->name('anggotapoktan.update'); 
+    Route::delete('/anggotapoktan/{id}', [\App\Http\Controllers\backsite\AnggotaPokTanController::class, 'destroy'])->name('anggotapoktan.destroy');   
 
     Route::resource('post', \App\Http\Controllers\backsite\PostController::class);
 

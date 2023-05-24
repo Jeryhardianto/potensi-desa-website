@@ -13,7 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('kelompok_tanis', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_poktan')->nullable();
+            $table->string('ketua_poktan')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('kelompok_tanis');
     }
 };

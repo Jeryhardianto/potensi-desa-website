@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Data RT')
+@section('title', 'Kelompok Tani')
 @section('content')
 
 {{--    <div class="loading"></div>--}}
@@ -10,13 +10,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Data RT
+                        <h1 class="m-0">Kelompok Tani
                         </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             {{-- <li class="breadcrumb-item"><a href="#">Home</a></li> --}}
-                            <li class="breadcrumb-item active">Data RT</li>
+                            <li class="breadcrumb-item active">Kelompok Tani</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -43,42 +43,41 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Kode RT</th>
-                                    <th>Nama RT</th>
-                                    <th>Keterangan</th>
+                                    <th>Nama Kelompok Tani</th>
+                                    <th>Nama Ketua</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($rts as $rt)
+                                @foreach($kelompoktanis as $kt)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$rt->kode_rt}}</td>
-                                        <td>{{$rt->nama_rt}}</td>
-                                        <td>{{$rt->keterangan}}</td>
+                                        <td>{{$kt->nama_poktan}}</td>
+                                        <td>{{$kt->ketua_poktan}}</td>
                                         <td>
 
                                             <a href="#" class="btn btn-primary detail-item"
                                                 data-target="#detailModal" data-toggle="modal"
-                                                data-id="{{$rt->id}}"
-                                                data-kode_rt="{{$rt->kode_rt}}"
-                                                data-nama_rt="{{$rt->nama_rt}}"
-                                                data-keterangan="{{$rt->keterangan}}"
+                                                data-id="{{$kt->id}}"
+                                                data-nama_poktan="{{$kt->nama_poktan}}"
+                                                data-ketua="{{$kt->ketua_poktan}}"
                                                 >
 
                                                 <i class="fas fa-eye"></i> Detail</a>
 
                                            <a href="#" class="btn btn-success edit-item" data-toggle="modal"
                                               data-target="#editModal"
-                                              data-id="{{$rt->id}}"
-                                              data-kode_rt="{{$rt->kode_rt}}"
-                                              data-nama_rt="{{$rt->nama_rt}}"
-                                              data-keterangan="{{$rt->keterangan}}"
+                                              data-id="{{$kt->id}}"
+                                              data-nama_poktan="{{$kt->nama_poktan}}"
+                                              data-ketua="{{$kt->ketua_poktan}}"
                                            >
                                                <i class="fas fa-pen-square"></i> Edit</a>
 
+                                               <a href="{{route('anggotapoktan.index', $kt->id)}}" class="btn btn-warning">
+                                                <i class="fas fa-plus"></i> Tambah Anggota PokTan</a>
 
-                                            <form class="d-inline" method="post" role="alert" action="{{ route('rt.destroy', $rt->id) }}">
+
+                                            <form class="d-inline" method="post" role="alert" action="{{ route('kelompoktani.destroy', $kt->id) }}">
                                                 @csrf
                                                 @method('delete')
                                                   <button type="submit" class="btn btn-danger">
@@ -105,37 +104,30 @@
     <div class="row">
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document" style="max-width: 68%;">
-            <form id="add-form" method="post" action="{{route('datapenduduk.store')}}">
+            <form id="add-form" method="post" action="#">
              @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Tambah Data RT</h5>
+                        <h5 class="modal-title" id="addModalLabel">Tambah Kolompok Tani</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-
                             <div class="row mr-3 ml-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="kode_rt">Kode RT</label>
-                                        <input type="text" class="form-control" id="kode_rt" name="kode_rt" >
-                                        <span id="errorKodeRT" class="error"></span>
+                                        <label for="nama_poktan">Nama Kelompok Tani</label>
+                                        <input type="text" class="form-control" id="nama_poktan" name="nama_poktan" >
+                                        <span id="errorNamaPoktan" class="error"></span>
 
                                     </div>
 
 
                                     <div class="form-group">
-                                        <label for="nama_rt">Nama RT</label>
-                                        <input type="text" class="form-control" id="nama_rt" name="nama_rt" >
-                                        <span id="errorNamaRT" class="error"></span>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="keterangan">Keterangan</label>
-                                        <textarea class="form-control" id="keterangan" name="keterangan" rows="3" ></textarea>
-                                        <span id="errorKeterangan" class="error"></span>
+                                        <label for="ketua">Nama Ketua</label>
+                                        <input type="text" class="form-control" id="ketua" name="ketua" >
+                                        <span id="errorKetua" class="error"></span>
                                     </div>
                                 </div>     
                             </div>
@@ -158,34 +150,27 @@
          <form id="edit-form">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Edit Data RT</h5>
+                    <h5 class="modal-title" id="addModalLabel">Edit Kelompok Tani</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
                 <div class="modal-body">
-
                     <div class="row mr-3 ml-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="kode_rt">Kode RT</label>
-                                <input type="text" class="form-control" id="edit-kode_rt" name="kode_rt" >
-                                <span id="edit-errorKodeRT" class="error"></span>
+                                <label for="nama_poktan">Nama Kelompok Tani</label>
+                                <input type="text" class="form-control" id="edit-nama_poktan" name="nama_poktan" >
+                                <span id="edit-errorNamaPoktan" class="error"></span>
 
                             </div>
 
 
                             <div class="form-group">
-                                <label for="nama_rt">Nama RT</label>
-                                <input type="text" class="form-control" id="edit-nama_rt" name="nama_rt" >
-                                <span id="edit-errorNamaRT" class="error"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="keterangan">Keterangan</label>
-                                <textarea class="form-control" id="edit-keterangan" name="keterangan" rows="3" ></textarea>
-                                <span id="edit-errorKeterangan" class="error"></span>
+                                <label for="ketua">Nama Ketua</label>
+                                <input type="text" class="form-control" id="edit-ketua" name="ketua" >
+                                <span id="edit-errorKetua" class="error"></span>
                             </div>
                         </div>     
                     </div>
@@ -208,7 +193,7 @@
          <form id="edit-form">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Detail Data RT</h5>
+                    <h5 class="modal-title" id="addModalLabel">Detail Kelompok Tani</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -218,21 +203,15 @@
                     <div class="row mr-3 ml-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="kode_rt">Kode RT</label>
-                                <input type="text" class="form-control" id="detail-kode_rt" name="kode_rt" readonly>
+                                <label for="nama_poktan">Nama Kelompok Tani</label>
+                                <input type="text" class="form-control" id="detail-nama_poktan" name="nama_poktan" readonly>
 
                             </div>
 
 
                             <div class="form-group">
-                                <label for="nama_rt">Nama RT</label>
-                                <input type="text" class="form-control" id="detail-nama_rt" name="nama_rt" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="keterangan">Keterangan</label>
-                                <textarea class="form-control" id="detail-keterangan" name="keterangan" rows="3" readonly></textarea>
-                             
+                                <label for="ketua">Nama Ketua</label>
+                                <input type="text" class="form-control" id="detail-ketua" name="ketua" readonly>
                             </div>
                         </div>     
                     </div>
@@ -280,19 +259,17 @@
       e.preventDefault();
       $.ajax({
           type: "POST",
-          url: "{{ route('rt.store') }}",
+          url: "{{ route('kelompoktani.store') }}",
           data: $('#add-form').serialize(),
 
           success: function (response) {
 
               if(response.errors)
               {
-                  $('#errorKodeRT').text(response.errors.kode_rt ? response.errors.kode_rt[0]  : '');
-                  $('#errorNamaRT').text(response.errors.nama_rt ? response.errors.nama_rt[0]  : '');
-                  $('#errorKeterangan').text(response.errors.keterangan ? response.errors.keterangan[0]  : '');
+                  $('#errorNamaPoktan').text(response.errors.nama_poktan ? response.errors.nama_poktan[0]  : '');
+                  $('#errorKetua').text(response.errors.ketua ? response.errors.ketua[0]  : '');
 
               }else{
-
                   Swal.fire(
                       'Sukses',
                       'Data Berhasil Ditambahkan',
@@ -302,9 +279,6 @@
                       location.reload();
                   }, 1000);
               }
-
-
-
           }
       });
   });
@@ -312,16 +286,14 @@
 //  Edit Ajax
   $('.edit-item').click(function() {
       $('#edit-id').val($(this).data('id'));
-      $('#edit-kode_rt').val($(this).data('kode_rt'));
-      $('#edit-nama_rt').val($(this).data('nama_rt'));
-      $('#edit-keterangan').val($(this).data('keterangan'));
+      $('#edit-nama_poktan').val($(this).data('nama_poktan'));
+      $('#edit-ketua').val($(this).data('ketua'));
   });
 
   //  Detail Ajax
   $('.detail-item').click(function() {
-     $('#detail-kode_rt').val($(this).data('kode_rt'));
-      $('#detail-nama_rt').val($(this).data('nama_rt'));
-      $('#detail-keterangan').val($(this).data('keterangan'));
+    $('#detail-nama_poktan').val($(this).data('nama_poktan'));
+    $('#detail-ketua').val($(this).data('ketua'));
   });
 
   //Updated
@@ -332,17 +304,15 @@
 
       $.ajax({
           type: 'PUT',
-          url: '/webapp/rt/'+ id,
+          url: '/webapp/kelompoktani/'+ id,
           data: formData,
           success: function(response) {
             if(response.errors)
               {
-                  $('#edit-errorKodeRT').text(response.errors.kode_rt ? response.errors.kode_rt[0]  : '');
-                  $('#edit-errorNamaRT').text(response.errors.nama_rt ? response.errors.nama_rt[0]  : '');
-                  $('#edit-errorKeterangan').text(response.errors.keterangan ? response.errors.keterangan[0]  : '');
+                  $('#edit-errorNamaPoktan').text(response.errors.nama_poktan ? response.errors.nama_poktan[0]  : '');
+                  $('#edit-errorKetua').text(response.errors.ketua ? response.errors.ketua[0]  : '');
 
               }else{
-
                   Swal.fire(
                       'Sukses',
                       'Data Berhasil Diubah',
@@ -367,7 +337,7 @@
                 event.preventDefault();
                 // alert('Hallo');
                 Swal.fire({
-                    title: 'Hapus Data RT',
+                    title: 'Hapus Data Kelompok Tani',
                     text: "Apakah anda yakin menghapus data ini?",
                     icon: 'warning',
                     showCancelButton: true,

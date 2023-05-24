@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Data RT')
+@section('title', 'Anggota Kelompok Tani')
 @section('content')
 
 {{--    <div class="loading"></div>--}}
@@ -10,13 +10,17 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Data RT
+                        <h1 class="m-0">Anggota Kelompok Tani
                         </h1>
+                        <div class="mt-2">
+                            <h5>Nama Kelompok Tani : {{$poktan->nama_poktan}}</h5>
+                            <h5>Ketua : {{ $poktan->ketua_poktan }} </h5>
+                        </div>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             {{-- <li class="breadcrumb-item"><a href="#">Home</a></li> --}}
-                            <li class="breadcrumb-item active">Data RT</li>
+                            <li class="breadcrumb-item active">Anggota Kelompok Tani</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -43,42 +47,41 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Kode RT</th>
-                                    <th>Nama RT</th>
-                                    <th>Keterangan</th>
+                                    <th>Nama</th>
+                                    <th>Kelompok Tani</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($rts as $rt)
+                                @foreach($anggotapoktan as $apt)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$rt->kode_rt}}</td>
-                                        <td>{{$rt->nama_rt}}</td>
-                                        <td>{{$rt->keterangan}}</td>
+                                        <td>{{$apt->nama}}</td>
+                                        <td>{{$poktan->nama_poktan}}</td>
+                                        <td>
+                                            @if ($apt->is_status == 1)
+                                                <span class="badge badge-success">Aktif</span>
+                                            @else
+                                                <span class="badge badge-danger">Tidak Aktif</span>
+                                            @endif
+                                        
+                                        </td>
                                         <td>
 
-                                            <a href="#" class="btn btn-primary detail-item"
-                                                data-target="#detailModal" data-toggle="modal"
-                                                data-id="{{$rt->id}}"
-                                                data-kode_rt="{{$rt->kode_rt}}"
-                                                data-nama_rt="{{$rt->nama_rt}}"
-                                                data-keterangan="{{$rt->keterangan}}"
-                                                >
-
-                                                <i class="fas fa-eye"></i> Detail</a>
+                                          
 
                                            <a href="#" class="btn btn-success edit-item" data-toggle="modal"
                                               data-target="#editModal"
-                                              data-id="{{$rt->id}}"
-                                              data-kode_rt="{{$rt->kode_rt}}"
-                                              data-nama_rt="{{$rt->nama_rt}}"
-                                              data-keterangan="{{$rt->keterangan}}"
+                                              data-id="{{$apt->id}}"
+                                              data-nama="{{$apt->nama}}"
+                                              data-status="{{$apt->is_status}}"
                                            >
                                                <i class="fas fa-pen-square"></i> Edit</a>
 
+                                               
 
-                                            <form class="d-inline" method="post" role="alert" action="{{ route('rt.destroy', $rt->id) }}">
+                                            <form class="d-inline" method="post" role="alert" action="{{ route('anggotapoktan.destroy', $apt->id) }}">
                                                 @csrf
                                                 @method('delete')
                                                   <button type="submit" class="btn btn-danger">
@@ -105,42 +108,39 @@
     <div class="row">
         <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document" style="max-width: 68%;">
-            <form id="add-form" method="post" action="{{route('datapenduduk.store')}}">
+            <form id="add-form" method="post" action="#">
              @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Tambah Data RT</h5>
+                        <h5 class="modal-title" id="addModalLabel">Tambah Anggota Kolompok Tani {{ $poktan->nama_poktan }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-
                             <div class="row mr-3 ml-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="kode_rt">Kode RT</label>
-                                        <input type="text" class="form-control" id="kode_rt" name="kode_rt" >
-                                        <span id="errorKodeRT" class="error"></span>
+                                        <label for="nama">Nama Anggota</label>
+                                        <input type="text" class="form-control" id="nama" name="nama" >
+                                        <span id="errorNama" class="error"></span>
 
                                     </div>
 
-
                                     <div class="form-group">
-                                        <label for="nama_rt">Nama RT</label>
-                                        <input type="text" class="form-control" id="nama_rt" name="nama_rt" >
-                                        <span id="errorNamaRT" class="error"></span>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="keterangan">Keterangan</label>
-                                        <textarea class="form-control" id="keterangan" name="keterangan" rows="3" ></textarea>
-                                        <span id="errorKeterangan" class="error"></span>
+                                        <label>Status</label>
+                                        <select class="form-control" style="width: 100%;" id="status" name="status" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                                <option value="2">-- Pilih Status ---</option>
+                                                <option value="1">Aktif</option>
+                                                <option value="0">Tidak Aktif</option>
+                                        </select>
+                                        <span id="errorStatus" class="error"></span>
                                     </div>
                                 </div>     
                             </div>
                     </div>
                     <div class="modal-footer">
+                        <input type="text" id="id_poktan" name="id_poktan" value="{{ $poktan->id }}" hidden>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-primary" id="add-btn">Simpan</button>
                     </div>
@@ -158,38 +158,34 @@
          <form id="edit-form">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Edit Data RT</h5>
+                    <h5 class="modal-title" id="addModalLabel">Edit Anggota Kelompok Tani</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
                 <div class="modal-body">
-
                     <div class="row mr-3 ml-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="kode_rt">Kode RT</label>
-                                <input type="text" class="form-control" id="edit-kode_rt" name="kode_rt" >
-                                <span id="edit-errorKodeRT" class="error"></span>
+                                <label for="edit-nama">Nama Anggota</label>
+                                <input type="text" class="form-control" id="edit-nama" name="nama" >
+                                <span id="edit-errorNama" class="error"></span>
 
                             </div>
 
-
                             <div class="form-group">
-                                <label for="nama_rt">Nama RT</label>
-                                <input type="text" class="form-control" id="edit-nama_rt" name="nama_rt" >
-                                <span id="edit-errorNamaRT" class="error"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="keterangan">Keterangan</label>
-                                <textarea class="form-control" id="edit-keterangan" name="keterangan" rows="3" ></textarea>
-                                <span id="edit-errorKeterangan" class="error"></span>
+                                <label>Status</label>
+                                <select class="form-control" style="width: 100%;" id="edit-status" name="status" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                    <option value="2">-- Pilih Status ---</option>
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Tidak Aktif</option>
+                                </select>
+                                <span id="edit-errorStatus" class="error"></span>
                             </div>
                         </div>     
                     </div>
-            </div>
+                </div>
                 <div class="modal-footer">
                     <input type="text" id="edit-id" name="id" hidden>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -201,50 +197,7 @@
     </div>
 </div>
 
-{{-- Detail  Modal--}}
-<div class="row">
-    <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" style="max-width: 68%;">
-         <form id="edit-form">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Detail Data RT</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
 
-                <div class="modal-body">
-                    <div class="row mr-3 ml-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="kode_rt">Kode RT</label>
-                                <input type="text" class="form-control" id="detail-kode_rt" name="kode_rt" readonly>
-
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="nama_rt">Nama RT</label>
-                                <input type="text" class="form-control" id="detail-nama_rt" name="nama_rt" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="keterangan">Keterangan</label>
-                                <textarea class="form-control" id="detail-keterangan" name="keterangan" rows="3" readonly></textarea>
-                             
-                            </div>
-                        </div>     
-                    </div>
-            </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 @endsection
 
@@ -252,6 +205,7 @@
 @push('javascript-internal')
 <script>
   $(function () {
+   
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -280,19 +234,17 @@
       e.preventDefault();
       $.ajax({
           type: "POST",
-          url: "{{ route('rt.store') }}",
+          url: "{{ route('anggotapoktan.store') }}",
           data: $('#add-form').serialize(),
 
           success: function (response) {
 
               if(response.errors)
               {
-                  $('#errorKodeRT').text(response.errors.kode_rt ? response.errors.kode_rt[0]  : '');
-                  $('#errorNamaRT').text(response.errors.nama_rt ? response.errors.nama_rt[0]  : '');
-                  $('#errorKeterangan').text(response.errors.keterangan ? response.errors.keterangan[0]  : '');
+                  $('#errorNama').text(response.errors.nama ? response.errors.nama[0]  : '');
+                  $('#errorStatus').text(response.errors.status ? response.errors.status[0]  : '');
 
               }else{
-
                   Swal.fire(
                       'Sukses',
                       'Data Berhasil Ditambahkan',
@@ -302,9 +254,6 @@
                       location.reload();
                   }, 1000);
               }
-
-
-
           }
       });
   });
@@ -312,17 +261,11 @@
 //  Edit Ajax
   $('.edit-item').click(function() {
       $('#edit-id').val($(this).data('id'));
-      $('#edit-kode_rt').val($(this).data('kode_rt'));
-      $('#edit-nama_rt').val($(this).data('nama_rt'));
-      $('#edit-keterangan').val($(this).data('keterangan'));
+      $('#edit-nama').val($(this).data('nama'));
+      $('#edit-status').val($(this).data('status'));
   });
 
-  //  Detail Ajax
-  $('.detail-item').click(function() {
-     $('#detail-kode_rt').val($(this).data('kode_rt'));
-      $('#detail-nama_rt').val($(this).data('nama_rt'));
-      $('#detail-keterangan').val($(this).data('keterangan'));
-  });
+
 
   //Updated
   $('#edit-form').submit(function(e) {
@@ -332,17 +275,15 @@
 
       $.ajax({
           type: 'PUT',
-          url: '/webapp/rt/'+ id,
+          url: '/webapp/anggotapoktan/'+ id,
           data: formData,
           success: function(response) {
             if(response.errors)
               {
-                  $('#edit-errorKodeRT').text(response.errors.kode_rt ? response.errors.kode_rt[0]  : '');
-                  $('#edit-errorNamaRT').text(response.errors.nama_rt ? response.errors.nama_rt[0]  : '');
-                  $('#edit-errorKeterangan').text(response.errors.keterangan ? response.errors.keterangan[0]  : '');
+                $('#edit-errorNama').text(response.errors.nama ? response.errors.nama[0]  : '');
+                  $('#edit-errorStatus').text(response.errors.status ? response.errors.status[0]  : '');
 
               }else{
-
                   Swal.fire(
                       'Sukses',
                       'Data Berhasil Diubah',
@@ -367,7 +308,7 @@
                 event.preventDefault();
                 // alert('Hallo');
                 Swal.fire({
-                    title: 'Hapus Data RT',
+                    title: 'Hapus Data Anggota Kelompok Tani',
                     text: "Apakah anda yakin menghapus data ini?",
                     icon: 'warning',
                     showCancelButton: true,

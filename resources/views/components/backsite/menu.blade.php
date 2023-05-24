@@ -87,7 +87,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('post.index') }}" class="nav-link">
+                        <a href="{{ route('kelompoktani.index') }}" class="nav-link {{ set_active(['kelompoktani.*', 'anggotapoktan.*']) }}">
                             <i class="nav-icon fas fa-newspaper"></i>
                             <p>
                                 Data Kelompok Tani
