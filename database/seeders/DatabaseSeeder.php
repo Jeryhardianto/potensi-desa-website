@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\DataPenduduk;
+use App\Models\DataRT;
 use App\Models\DetailDataPenduduk;
 use Illuminate\Database\Seeder;
 
@@ -61,7 +62,17 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        DataRT::create([
+            'kode_rt' => (rand(0,1) == 0) ? "RT 01" : "RT 02",
+            'nama_rt' => (rand(0,1) == 0) ? "RT 01" : "RT 02",
+            'keterangan' => 'Test ini keterangan'
+        ]);
 
+        DataRT::create([
+            'kode_rt' => (rand(0,1) == 0) ? "RT 01" : "RT 02",
+            'nama_rt' => (rand(0,1) == 0) ? "RT 01" : "RT 02",
+            'keterangan' => 'Test ini keterangan'
+        ]);
 
 
 

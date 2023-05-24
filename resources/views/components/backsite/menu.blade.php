@@ -78,7 +78,7 @@
 
 
                     <li class="nav-item">
-                        <a href="{{ route('post.index') }}" class="nav-link">
+                        <a href="{{ route('rt.index') }}" class="nav-link {{ set_active(['rt.*']) }}">
                             <i class="nav-icon fas fa-newspaper"></i>
                             <p>
                                 Data RT

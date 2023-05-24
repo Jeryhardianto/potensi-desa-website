@@ -64,6 +64,15 @@ Route::prefix('webapp')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/detaildatapenduduk/{id}', [\App\Http\Controllers\backsite\DetailDataPendudukController::class, 'update'])->name('detaildatapenduduk.update'); 
     Route::delete('/detaildatapenduduk/{id}', [\App\Http\Controllers\backsite\DetailDataPendudukController::class, 'destroy'])->name('detaildatapenduduk.destroy');
 
+
+    // RT
+    Route::get('/rt', [\App\Http\Controllers\backsite\RTController::class, 'index'])->name('rt.index'); 
+    Route::post('/rt', [\App\Http\Controllers\backsite\RTController::class, 'store'])->name('rt.store'); 
+    Route::put('/rt/{id}', [\App\Http\Controllers\backsite\RTController::class, 'update'])->name('rt.update'); 
+    Route::delete('/rt/{id}', [\App\Http\Controllers\backsite\RTController::class, 'destroy'])->name('rt.destroy');
+
+
+
     Route::resource('post', \App\Http\Controllers\backsite\PostController::class);
 
 

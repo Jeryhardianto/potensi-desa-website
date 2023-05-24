@@ -796,7 +796,7 @@
                 event.preventDefault();
                 // alert('Hallo');
                 Swal.fire({
-                    title: 'Hapus Data Penduduk',
+                    title: 'Hapus Detail Data Penduduk',
                     text: "Apakah anda yakin menghapus data ini?",
                     icon: 'warning',
                     showCancelButton: true,

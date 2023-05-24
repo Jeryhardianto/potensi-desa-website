@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backsite;
 
 
+use App\Models\DataRT;
 use App\Models\DataPenduduk;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,8 @@ class DataPendudukController extends Controller
     public function index()
     {
         $dataPenduduks = DataPenduduk::orderBy('created_at', 'desc')->get();
-        return view('pages.backsite.datapenduduk.index', compact('dataPenduduks'));
+        $rts = DataRT::orderBy('created_at', 'desc')->get();
+        return view('pages.backsite.datapenduduk.index', compact('dataPenduduks', 'rts'));
     }
 
     public function store(Request $request)
@@ -60,8 +62,6 @@ class DataPendudukController extends Controller
 
     }
 
-
- 
     public function update(Request $request, $id)
     {
       

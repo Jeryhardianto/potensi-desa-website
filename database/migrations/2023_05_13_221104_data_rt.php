@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('kode_rt')->nullable();
             $table->string('nama_rt')->nullable();
             $table->string('keterangan')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
