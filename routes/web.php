@@ -89,6 +89,12 @@ Route::prefix('webapp')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/sumberdaya/{id}', [\App\Http\Controllers\backsite\SumberDayaController::class, 'update'])->name('sumberdaya.update'); 
     Route::delete('/sumberdaya/{id}', [\App\Http\Controllers\backsite\SumberDayaController::class, 'destroy'])->name('sumberdaya.destroy'); 
 
+    // Detail Sumber Daya
+    Route::get('/detailsumberdaya/{id}', [\App\Http\Controllers\backsite\DetailSumberDayaController::class, 'index'])->name('detailsumberdaya.index');  
+    Route::post('/detailsumberdaya', [\App\Http\Controllers\backsite\DetailSumberDayaController::class, 'store'])->name('detailsumberdaya.store'); 
+    Route::put('/detailsumberdaya/{id}', [\App\Http\Controllers\backsite\DetailSumberDayaController::class, 'update'])->name('detailsumberdaya.update'); 
+    Route::delete('/detailsumberdaya/{id}', [\App\Http\Controllers\backsite\DetailSumberDayaController::class, 'destroy'])->name('detailsumberdaya.destroy');  
+
     Route::resource('post', \App\Http\Controllers\backsite\PostController::class);
 
 

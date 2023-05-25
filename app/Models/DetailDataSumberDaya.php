@@ -11,5 +11,5 @@ class DetailDataSumberDaya extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
-    protected $table = 'detail_data_sumber_dayas';
+    protected $table = 'data_detail_sumber_days';
 }

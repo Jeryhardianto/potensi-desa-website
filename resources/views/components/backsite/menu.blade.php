@@ -96,7 +96,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('sumberdaya.index') }}" class="nav-link {{ set_active(['sumberdaya.*']) }}">
+                        <a href="{{ route('sumberdaya.index') }}" class="nav-link {{ set_active(['sumberdaya.*', 'detailsumberdaya.*']) }}">
                             <i class="nav-icon fas fa-newspaper"></i>
                             <p>
                                 Data Sumber Daya

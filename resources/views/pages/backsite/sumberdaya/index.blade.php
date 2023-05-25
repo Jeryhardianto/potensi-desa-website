@@ -75,7 +75,7 @@
                                            >
                                                <i class="fas fa-pen-square"></i> Edit</a>
 
-                                               <a href="{{route('anggotapoktan.index', $sd->id)}}" class="btn btn-warning">
+                                               <a href="{{route('detailsumberdaya.index', $sd->id)}}" class="btn btn-warning">
                                                 <i class="fas fa-plus"></i> Tambah Detail Sumber Daya</a>
 
 
