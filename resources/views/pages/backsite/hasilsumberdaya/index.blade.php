@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Detail Sumber Daya')
+@section('title', 'Data Hasil Sumber Daya')
 @section('content')
 
 {{--    <div class="loading"></div>--}}
@@ -10,16 +10,14 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Detail Sumber Daya
+                        <h1 class="m-0">Data Hasil Sumber Daya
                         </h1>
-                        <div class="mt-2">
-                            <h5>Nama Sumber Daya : {{$sumberdaya->nama_sumber_daya}}</h5>
-                        </div>
+              
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             {{-- <li class="breadcrumb-item"><a href="#">Home</a></li> --}}
-                            <li class="breadcrumb-item active">Detail Sumber Daya</li>
+                            <li class="breadcrumb-item active">Data Hasil Sumber Daya</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -46,27 +44,29 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Pemilik</th>
-                                    <th>Alamat</th>
+                                    <th>Sumber Daya</th>
+                                    <th>Periode Awal</th>
+                                    <th>Periode Akhir</th>
                                     <th>Jumlah Hasil</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($detailsumberdaya as $dsd)
+                                @foreach($dataHasilSumberDaya as $dsd)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$dsd->pemilik}}</td>
-                                        <td>{{$dsd->alamat}}</td>
+                                        <td>{{$dsd->sumberdaya->nama_sumber_daya}}</td>
+                                        <td>{{$dsd->periode_awal}}</td>
+                                        <td>{{$dsd->periode_akhir}}</td>
                                         <td>{{$dsd->jumlah_hasil}} {{ $dsd->satuan_hasil }}</td>
-                                       
                                         <td>
 
                                             <a href="#" class="btn btn-primary detail-item"
                                                 data-target="#detailModal" data-toggle="modal"
                                                 data-id="{{$dsd->id}}"
-                                                data-pemilik="{{$dsd->pemilik}}"
-                                                data-alamat="{{$dsd->alamat}}"
+                                                data-id_sumber_daya="{{$dsd->id_sumber_daya}}"
+                                                data-periode_awal="{{$dsd->periode_awal}}"
+                                                data-periode_akhir="{{$dsd->periode_akhir}}"
                                                 data-masa_panen="{{$dsd->masa_panen}}"
                                                 data-satuan_panen="{{$dsd->satuan_panen}}"
                                                 data-jumlah_hasil="{{$dsd->jumlah_hasil}}"
@@ -80,20 +80,21 @@
                                            <a href="#" class="btn btn-success edit-item" data-toggle="modal"
                                               data-target="#editModal"
                                               data-id="{{$dsd->id}}"
-                                              data-pemilik="{{$dsd->pemilik}}"
-                                              data-alamat="{{$dsd->alamat}}"
-                                              data-masa_panen="{{$dsd->masa_panen}}"
-                                              data-satuan_panen="{{$dsd->satuan_panen}}"
-                                              data-jumlah_hasil="{{$dsd->jumlah_hasil}}"
-                                              data-satuan_hasil="{{$dsd->satuan_hasil}}"
-                                              data-jumlah_anggota="{{$dsd->jumlah_anggota}}"
-                                              data-luas="{{$dsd->luas}}"
-                                              data-satuan_luas="{{$dsd->satuan_luas}}"
+                                              data-id_sumber_daya="{{$dsd->id_sumber_daya}}"
+                                            data-periode_awal="{{$dsd->periode_awal}}"
+                                            data-periode_akhir="{{$dsd->periode_akhir}}"
+                                            data-masa_panen="{{$dsd->masa_panen}}"
+                                            data-satuan_panen="{{$dsd->satuan_panen}}"
+                                            data-jumlah_hasil="{{$dsd->jumlah_hasil}}"
+                                            data-satuan_hasil="{{$dsd->satuan_hasil}}"
+                                            data-jumlah_anggota="{{$dsd->jumlah_anggota}}"
+                                            data-luas="{{$dsd->luas}}"
+                                            data-satuan_luas="{{$dsd->satuan_luas}}"
                                            >
                             
                                                <i class="fas fa-pen-square"></i> Edit</a>
 
-                                            <form class="d-inline" method="post" role="alert" action="{{ route('detailsumberdaya.destroy', $dsd->id) }}">
+                                            <form class="d-inline" method="post" role="alert" action="{{ route('hasilsumberdaya.destroy', $dsd->id) }}">
                                                 @csrf
                                                 @method('delete')
                                                   <button type="submit" class="btn btn-danger">
@@ -124,7 +125,7 @@
              @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Tambah Detail Sumber Daya</h5>
+                        <h5 class="modal-title" id="addModalLabel">Tambah Data Hasil Sumber Daya</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -132,17 +133,31 @@
                     <div class="modal-body">
                             <div class="row mr-3 ml-3">
                                 <div class="col-md-6">
+
                                     <div class="form-group">
-                                        <label for="pemilik">Pemilik</label>
-                                        <input type="text" class="form-control" id="pemilik" name="pemilik" >
-                                        <span id="errorPemilik" class="error"></span>
+                                        <label>Nama Sumber Daya</label>
+                                        <select class="form-control" style="width: 100%;" id="sumber_daya" name="sumber_daya" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                            <option value="0">-- Pilih Sumber Daya ---</option>
+                                            @foreach ($sumberdayas as $sd)
+                                                <option value="{{ $sd->id }}">{{ $sd->nama_sumber_daya }}</option>
+                                            @endforeach
+                                         
+                                        </select>
+                                        <span id="errorSumberDaya" class="error"></span>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="nama">Alamat</label>
-                                        <textarea name="alamat" class="form-control" id="alamat" cols="30" rows="5"></textarea>
-                                        <span id="errorAlamat" class="error"></span>
+                                        <label for="periodeawal">Periode Awal</label>
+                                        <input readonly type="date" class="form-control" id="periodeawal" name="periodeawal" >
+                                        <span id="errorPeriodeAwal" class="error"></span>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="periodeakhir">Periode Akhir</label>
+                                        <input type="date" class="form-control" id="periodeakhir" name="periodeakhir" >
+                                        <span id="errorPeriodeAkhir" class="error"></span>
+                                    </div>
+
 
                                     <div class="form-group">
                                         <label for="masapanen">Masa Panen</label>
@@ -188,7 +203,6 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="text" id="id_sumberdaya" name="id_sumberdaya" value="{{ $sumberdaya->id }}" hidden>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn btn-primary" id="add-btn">Simpan</button>
                     </div>
@@ -206,7 +220,7 @@
          <form id="edit-form">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Edit Anggota Kelompok Tani</h5>
+                    <h5 class="modal-title" id="addModalLabel">Edit Data Hasil Sumber Daya</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -215,17 +229,31 @@
                 <div class="modal-body">
                     <div class="row mr-3 ml-3">
                         <div class="col-md-6">
+
                             <div class="form-group">
-                                <label for="pemilik">Pemilik</label>
-                                <input type="text" class="form-control" id="edit-pemilik" name="pemilik" >
-                                <span id="edit-errorPemilik" class="error"></span>
+                                <label>Nama Sumber Daya</label>
+                                <select class="form-control" style="width: 100%;" id="edit-sumber_daya" name="sumber_daya" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                    <option value="0">-- Pilih Sumber Daya ---</option>
+                                    @foreach ($sumberdayas as $sd)
+                                        <option value="{{ $sd->id }}">{{ $sd->nama_sumber_daya }}</option>
+                                    @endforeach
+                                 
+                                </select>
+                                <span id="edit-errorSumberDaya" class="error"></span>
                             </div>
 
                             <div class="form-group">
-                                <label for="nama">Alamat</label>
-                                <textarea name="alamat" class="form-control" id="edit-alamat" cols="30" rows="5"></textarea>
-                                <span id="edit-errorAlamat" class="error"></span>
+                                <label for="periodeawal">Periode Awal</label>
+                                <input type="date" class="form-control" id="edit-periodeawal" name="periodeawal" >
+                                <span id="edit-errorPeriodeAwal" class="error"></span>
                             </div>
+
+                            <div class="form-group">
+                                <label for="periodeakhir">Periode Akhir</label>
+                                <input type="date" class="form-control" id="edit-periodeakhir" name="periodeakhir" >
+                                <span id="edit-errorPeriodeAkhir" class="error"></span>
+                            </div>
+
 
                             <div class="form-group">
                                 <label for="masapanen">Masa Panen</label>
@@ -297,33 +325,47 @@
                 <div class="modal-body">
                     <div class="row mr-3 ml-3">
                         <div class="col-md-6">
+
                             <div class="form-group">
-                                <label for="pemilik">Pemilik</label>
-                                <input type="text" class="form-control" id="detail-pemilik" readonly name="pemilik" >
+                                <label>Nama Sumber Daya</label>
+                                <select class="form-control" style="width: 100%;" id="detail-sumber_daya" name="sumber_daya" data-select2-id="1" tabindex="-1" aria-hidden="true" readonly>
+                                    <option value="0">-- Pilih Sumber Daya ---</option>
+                                    @foreach ($sumberdayas as $sd)
+                                        <option value="{{ $sd->id }}">{{ $sd->nama_sumber_daya }}</option>
+                                    @endforeach
+                                 
+                                </select>
                                 
                             </div>
 
                             <div class="form-group">
-                                <label for="nama">Alamat</label>
-                                <textarea readonly name="alamat" class="form-control" id="detail-alamat" cols="30" rows="5"></textarea>
+                                <label for="periodeawal">Periode Awal</label>
+                                <input readonly type="date" class="form-control" id="detail-periodeawal" name="periodeawal" >
                                 
                             </div>
+
+                            <div class="form-group">
+                                <label for="periodeakhir">Periode Akhir</label>
+                                <input readonly type="date" class="form-control" id="detail-periodeakhir" name="periodeakhir" >
+                                
+                            </div>
+
 
                             <div class="form-group">
                                 <label for="masapanen">Masa Panen</label>
-                                <input type="text" class="form-control" id="detail-masapanen" readonly name="masapanen" >
-                               
+                                <input readonly type="text" class="form-control" id="detail-masapanen" name="masapanen" >
+                                
                             </div>
 
                             <div class="form-group">
                                 <label for="satuanpanen">Satuan Panen</label>
-                                <input type="text" class="form-control" id="detail-satuanpanen" readonly name="satuanpanen" >
+                                <input readonly type="text" class="form-control" id="detail-satuanpanen" name="satuanpanen" >
                                 
                             </div>
 
                             <div class="form-group">
                                 <label for="jumlah_hasil">Jumlah Hasil</label>
-                                <input type="text" class="form-control" id="detail-jumlah_hasil" readonly name="jumlah_hasil" >
+                                <input readonly type="text" class="form-control" id="detail-jumlah_hasil" name="jumlah_hasil" >
                                 
                             </div>
 
@@ -331,23 +373,23 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="satuan_hasil">Satuan Hasil</label>
-                                <input type="text" class="form-control" id="detail-satuan_hasil" readonly name="satuan_hasil" >
-                              
+                                <input readonly type="text" class="form-control" id="detail-satuan_hasil" name="satuan_hasil" >
+                               
                             </div>
                             <div class="form-group">
                                 <label for="jumlah_anggota">Jumlah Anggota</label>
-                                <input type="text" class="form-control" id="detail-jumlah_anggota" readonly name="jumlah_anggota" >
-                                
+                                <input readonly type="text" class="form-control" id="detail-jumlah_anggota" name="jumlah_anggota" >
+                             
                             </div>
                             <div class="form-group">
                                 <label for="luas">Luas</label>
-                                <input type="text" class="form-control" id="detail-luas" readonly name="luas" >
+                                <input readonly type="text" class="form-control" id="detail-luas" name="luas" >
                                 
                             </div>
                             <div class="form-group">
                                 <label for="satuanluas">Satuan Luas</label>
-                                <input type="text" class="form-control" id="detail-satuanluas" readonly name="satuanluas" >
-                               
+                                <input readonly type="text" class="form-control" id="detail-satuanluas" name="satuanluas" >
+                                
                             </div>
                         </div>   
                     </div>
@@ -397,15 +439,16 @@
       e.preventDefault();
       $.ajax({
           type: "POST",
-          url: "{{ route('detailsumberdaya.store') }}",
+          url: "{{ route('hasilsumberdaya.store') }}",
           data: $('#add-form').serialize(),
 
           success: function (response) {
 
               if(response.errors)
               {
-                  $('#errorPemilik').text(response.errors.pemilik ? response.errors.pemilik[0]  : '');
-                  $('#errorAlamat').text(response.errors.alamat ? response.errors.alamat[0]  : '');
+                  $('#errorSumberDaya').text(response.errors.sumber_daya ? response.errors.sumber_daya[0]  : '');
+                  $('#errorPeriodeAwal').text(response.errors.periodeawal ? response.errors.periodeawal[0]  : '');
+                  $('#errorPeriodeAkhir').text(response.errors.periodeakhir ? response.errors.periodeakhir[0]  : '');
                   $('#errorMasaPanen').text(response.errors.masapanen ? response.errors.masapanen[0]  : '');
                   $('#errorSatuanPanen').text(response.errors.satuanpanen ? response.errors.satuanpanen[0]  : '');
                   $('#errorJumlahHasil').text(response.errors.jumlah_hasil ? response.errors.jumlah_hasil[0]  : '');
@@ -431,8 +474,9 @@
 //  Edit Ajax
   $('.edit-item').click(function() {
       $('#edit-id').val($(this).data('id'));
-      $('#edit-pemilik').val($(this).data('pemilik'));
-      $('#edit-alamat').val($(this).data('alamat'));
+      $('#edit-sumber_daya').val($(this).data('id_sumber_daya'));
+      $('#edit-periodeawal').val($(this).data('periode_awal'));
+      $('#edit-periodeakhir').val($(this).data('periode_akhir'));
       $('#edit-masapanen').val($(this).data('masa_panen'));
       $('#edit-satuanpanen').val($(this).data('satuan_panen'));
       $('#edit-jumlah_hasil').val($(this).data('jumlah_hasil'));
@@ -445,8 +489,9 @@
 
     //  Detail Ajax
   $('.detail-item').click(function() {
-      $('#detail-pemilik').val($(this).data('pemilik'));
-      $('#detail-alamat').val($(this).data('alamat'));
+      $('#detail-sumber_daya').val($(this).data('id_sumber_daya'));
+      $('#detail-periodeawal').val($(this).data('periode_awal'));
+      $('#detail-periodeakhir').val($(this).data('periode_akhir'));
       $('#detail-masapanen').val($(this).data('masa_panen'));
       $('#detail-satuanpanen').val($(this).data('satuan_panen'));
       $('#detail-jumlah_hasil').val($(this).data('jumlah_hasil'));
@@ -464,13 +509,14 @@
 
       $.ajax({
           type: 'PUT',
-          url: '/webapp/detailsumberdaya/'+ id,
+          url: '/webapp/hasilsumberdaya/'+ id,
           data: formData,
           success: function(response) {
             if(response.errors)
               {
-                 $('#edit-errorPemilik').text(response.errors.pemilik ? response.errors.pemilik[0]  : '');
-                  $('#edit-errorAlamat').text(response.errors.alamat ? response.errors.alamat[0]  : '');
+                  $('#edit-errorSumberDaya').text(response.errors.sumber_daya ? response.errors.sumber_daya[0]  : '');
+                  $('#edit-errorPeriodeAwal').text(response.errors.periodeawal ? response.errors.periodeawal[0]  : '');
+                  $('#edit-errorPeriodeAkhir').text(response.errors.periodeakhir ? response.errors.periodeakhir[0]  : '');
                   $('#edit-errorMasaPanen').text(response.errors.masapanen ? response.errors.masapanen[0]  : '');
                   $('#edit-errorSatuanPanen').text(response.errors.satuanpanen ? response.errors.satuanpanen[0]  : '');
                   $('#edit-errorJumlahHasil').text(response.errors.jumlah_hasil ? response.errors.jumlah_hasil[0]  : '');
@@ -504,7 +550,7 @@
                 event.preventDefault();
                 // alert('Hallo');
                 Swal.fire({
-                    title: 'Hapus Data Detail Sumber Daya',
+                    title: 'Hapus Data Hasil Sumber Daya',
                     text: "Apakah anda yakin menghapus data ini?",
                     icon: 'warning',
                     showCancelButton: true,

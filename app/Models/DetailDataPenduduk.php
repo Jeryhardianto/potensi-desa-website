@@ -12,4 +12,6 @@ class DetailDataPenduduk extends Model
 
     protected $guarded = ['id'];
     protected $table = 'detail_data_penduduks';
+
+   
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('satuan_panen')->nullable();
             $table->string('jumlah_hasil')->nullable();
             $table->string('satuan_hasil')->nullable();
-            $table->string('jumlah _anggota')->nullable();
+            $table->string('jumlah_anggota')->nullable();
             $table->string('luas')->nullable();
             $table->string('satuan_luas')->nullable();
             $table->softDeletes();

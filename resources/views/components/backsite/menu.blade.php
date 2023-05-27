@@ -105,7 +105,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('post.index') }}" class="nav-link">
+                        <a href="{{ route('hasilsumberdaya.index') }}" class="nav-link  {{ set_active(['hasilsumberdaya.*']) }}">
                             <i class="nav-icon fas fa-newspaper"></i>
                             <p>
                                 Data Hasil Sumber Daya
