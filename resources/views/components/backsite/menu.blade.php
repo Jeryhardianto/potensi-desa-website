@@ -41,7 +41,7 @@
                 <li class="nav-header">Data Master</li>
                 @can('post_show')
                     <li class="nav-item">
-                        <a href="{{ route('post.index') }}" class="nav-link">
+                        <a href="{{ route('sejarah.index') }}" class="nav-link {{ set_active('sejarah.*') }}">
                             <i class="nav-icon fas fa-newspaper"></i>
                             <p>
                                 Sejarah

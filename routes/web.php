@@ -101,6 +101,10 @@ Route::prefix('webapp')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/hasilsumberdaya/{id}', [\App\Http\Controllers\backsite\HasilSumberDayaController::class, 'update'])->name('hasilsumberdaya.update'); 
     Route::delete('/hasilsumberdaya/{id}', [\App\Http\Controllers\backsite\HasilSumberDayaController::class, 'destroy'])->name('hasilsumberdaya.destroy'); 
 
+    // Sejarah
+    Route::get('/sejarah', [\App\Http\Controllers\backsite\SejarahController::class, 'index'])->name('sejarah.index');
+    Route::put('/sejarah/{id}', [\App\Http\Controllers\backsite\SejarahController::class, 'update'])->name('sejarah.update'); 
+    
     Route::resource('post', \App\Http\Controllers\backsite\PostController::class);
 
 

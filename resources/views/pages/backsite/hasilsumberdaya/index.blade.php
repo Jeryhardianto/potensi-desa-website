@@ -148,7 +148,7 @@
 
                                     <div class="form-group">
                                         <label for="periodeawal">Periode Awal</label>
-                                        <input readonly type="date" class="form-control" id="periodeawal" name="periodeawal" >
+                                        <input type="date" class="form-control" id="periodeawal" name="periodeawal" >
                                         <span id="errorPeriodeAwal" class="error"></span>
                                     </div>
 
