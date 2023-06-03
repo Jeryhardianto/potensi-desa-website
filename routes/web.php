@@ -100,10 +100,20 @@ Route::prefix('webapp')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/hasilsumberdaya', [\App\Http\Controllers\backsite\HasilSumberDayaController::class, 'store'])->name('hasilsumberdaya.store'); 
     Route::put('/hasilsumberdaya/{id}', [\App\Http\Controllers\backsite\HasilSumberDayaController::class, 'update'])->name('hasilsumberdaya.update'); 
     Route::delete('/hasilsumberdaya/{id}', [\App\Http\Controllers\backsite\HasilSumberDayaController::class, 'destroy'])->name('hasilsumberdaya.destroy'); 
-
+    
     // Sejarah
     Route::get('/sejarah', [\App\Http\Controllers\backsite\SejarahController::class, 'index'])->name('sejarah.index');
     Route::put('/sejarah/{id}', [\App\Http\Controllers\backsite\SejarahController::class, 'update'])->name('sejarah.update'); 
+    
+    // Visi dan Misi
+    Route::get('/visimisi', [\App\Http\Controllers\backsite\VisiMisiController::class, 'visi'])->name('visimisi.index');
+    Route::put('/visimisi/{id}', [\App\Http\Controllers\backsite\VisiMisiController::class, 'visi_update'])->name('visimisi.visi_update'); 
+    
+    Route::post('/visimisi', [\App\Http\Controllers\backsite\VisiMisiController::class, 'misi_add'])->name('visimisi.misi_add');
+    Route::put('/visimisi/misi/{id}', [\App\Http\Controllers\backsite\VisiMisiController::class, 'misi_update'])->name('visimisi.misi_update');
+    Route::delete('/visimisi/misi/{id}', [\App\Http\Controllers\backsite\VisiMisiController::class, 'destroy'])->name('visimisi.misi_destroy'); 
+
+    
     
     Route::resource('post', \App\Http\Controllers\backsite\PostController::class);
 
