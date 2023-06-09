@@ -32,7 +32,6 @@
 
   {{--Loading--}}
   <link rel="stylesheet" href="{{ asset('loading.css') }}">
-
   <style>
       .error{
           font-size: smaller;

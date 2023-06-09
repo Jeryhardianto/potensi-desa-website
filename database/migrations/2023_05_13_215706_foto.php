@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('fotos', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->string('judul')->nullable();
-            $table->string('slug')->nullable();
             $table->string('image')->nullable();
             $table->boolean('is_publish')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

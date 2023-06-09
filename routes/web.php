@@ -112,8 +112,13 @@ Route::prefix('webapp')->middleware(['auth', 'verified'])->group(function () {
     Route::post('/visimisi', [\App\Http\Controllers\backsite\VisiMisiController::class, 'misi_add'])->name('visimisi.misi_add');
     Route::put('/visimisi/misi/{id}', [\App\Http\Controllers\backsite\VisiMisiController::class, 'misi_update'])->name('visimisi.misi_update');
     Route::delete('/visimisi/misi/{id}', [\App\Http\Controllers\backsite\VisiMisiController::class, 'destroy'])->name('visimisi.misi_destroy'); 
-
     
+    // Foto
+    Route::get('/foto', [\App\Http\Controllers\backsite\FotoController::class, 'index'])->name('foto.index');
+    Route::post('/foto', [\App\Http\Controllers\backsite\FotoController::class, 'store'])->name('foto.store');
+    Route::post('/foto/{id}', [\App\Http\Controllers\backsite\FotoController::class, 'update'])->name('foto.update');
+    Route::delete('/foto/{id}', [\App\Http\Controllers\backsite\FotoController::class, 'destroy'])->name('foto.destroy');
+
     
     Route::resource('post', \App\Http\Controllers\backsite\PostController::class);
 

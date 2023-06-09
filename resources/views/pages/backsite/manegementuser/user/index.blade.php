@@ -33,7 +33,7 @@
 
                     <div class="card-body">
                         @can('user_create')
-                            <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah
+                            <a href="{{ route('users.create') }}" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Tambah
                                 User</a>
                         @endcan
                         <table id="example1" class="table table-bordered table-striped">
@@ -108,7 +108,7 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                "buttons": ["excel", "pdf"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#example2').DataTable({
                 "paging": true,

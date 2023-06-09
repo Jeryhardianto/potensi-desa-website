@@ -59,7 +59,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('post.index') }}" class="nav-link">
+                        <a href="{{ route('foto.index') }}" class="nav-link {{ set_active('foto.*') }}">
                             <i class="nav-icon fas fa-newspaper"></i>
                             <p>
                                 Foto
@@ -125,14 +125,14 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('role.index') }}" class="nav-link {{ set_active(['role.index','role.show', 'role.create','role.edit']) }}">
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
                             Role
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 @endcan
 
 

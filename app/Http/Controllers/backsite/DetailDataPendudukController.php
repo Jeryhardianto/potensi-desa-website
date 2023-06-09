@@ -35,7 +35,6 @@ class DetailDataPendudukController extends Controller
             'pendidikan' => 'required',
             'perkerjaan' => 'required',
             'golongandarah' => 'required',
-            'tanggalkawin' => 'required',
             'namaorgtua' => 'required',
 
             'jk' => 'required|not_in:0',
@@ -51,7 +50,6 @@ class DetailDataPendudukController extends Controller
             'pendidikan.required' =>  'Pendidikan Wajib Diisi',
             'perkerjaan.required' =>  'Perkerjaan Wajib Diisi',
             'golongandarah.required' =>  'Golongan Darah Wajib Diisi',
-            'tanggalkawin.required' =>  'Tanggal Kawin Darah Wajib Diisi',
             'namaorgtua.required' =>  'Nama Orang Tua Wajib Diisi',
 
 

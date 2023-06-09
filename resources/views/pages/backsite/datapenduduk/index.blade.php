@@ -35,7 +35,7 @@
 
                     <div class="card-body">
 
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+                            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#addModal">
                                 <i class="fas fa-plus"></i> Tambah
                             </button>
 
@@ -111,7 +111,7 @@
              @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Tambah Data Penduduk</h5>
+                        <h5 class="modal-title " id="addModalLabel">Tambah Data Penduduk</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -367,10 +367,12 @@
           }
       });
 
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+     $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["excel", "pdf"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
